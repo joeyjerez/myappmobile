@@ -25,6 +25,13 @@
             <ion-input formControlName="correo" fill="outline" placeholder="Correo" class="ion-padding"></ion-input>
           </ion-item>
           <ion-item>
+            <ion-label position="stacked">Región</ion-label>
+            <ion-select formControlName="region" placeholder="Elige una región">
+              <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">{{ region.nombre }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item>
             <ion-label position="floating">Contraseña</ion-label>
             <ion-input formControlName="password" type="password" minlength="4" maxlength="4" fill="outline" placeholder="Contraseña" class="ion-padding"></ion-input>
           </ion-item>
@@ -39,3 +46,6 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+
+

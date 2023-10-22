@@ -31,7 +31,7 @@ export class RecoverPage implements OnInit {
     if(usuario.rut == f.rut && usuario.correo == f.correo){
       console.log('ingresado');
       localStorage.setItem('ingresado','true'); //bandera que indica sesion activa
-      this.navCtrl.navigateRoot('change-pass');
+      this.navCtrl.navigateRoot('pass-change');
     }else{
       const alert = await this.alertController.create({
         header: '¡Ha ocurrido un error!',

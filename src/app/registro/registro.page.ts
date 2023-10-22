@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, IonicModule, NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { DatosRegionalesService } from '../servicios/datos-regionales.service';// Asegúrate de proporcionar la ruta correcta
+import { ComunasService } from '../servicios/comunas.service';
 
 @Component({
   selector: 'app-registro',
@@ -8,32 +10,51 @@ import { AlertController, IonicModule, NavController } from '@ionic/angular';
   styleUrls: ['./registro.page.scss'],
 })
 export class RegistroPage implements OnInit {
-
   formularioRegistro: FormGroup;
+  regionSeleccionada: string = '';
+  regiones: any[] = []; // Lista de regiones para usar en RegistroPage
 
-  constructor(public fb: FormBuilder,
+  constructor(
+    public fb: FormBuilder,
     public alertController: AlertController,
-    public navCtrl: NavController) { 
-      this.formularioRegistro = this.fb.group({
-        'nombre': new FormControl("", Validators.required),
-        'rut': new FormControl("", Validators.required),
-        'correo': new FormControl("", Validators.required),
-        'password': new FormControl("", Validators.required),
-        'confirmacionPassword': new FormControl("", Validators.required)
-        }); 
-    }
-
-  ngOnInit() {
+    public navCtrl: NavController,
+    private datosRegionalesService: DatosRegionalesService
+  ) {
+    this.formularioRegistro = this.fb.group({
+      nombre: new FormControl('', Validators.required),
+      rut: new FormControl('', Validators.required),
+      correo: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      confirmacionPassword: new FormControl('', Validators.required),
+      region: new FormControl(''),
+      comuna: new FormControl(''),
+    });
   }
 
-  async guardar(){
+  ngOnInit() {
+    this.obtenerRegiones();
+    
+  }
+
+  obtenerRegiones() {
+    this.datosRegionalesService.obtenerRegiones().subscribe(
+      (data) => {
+        this.regiones = data.data; // Llenar la lista de regiones en RegistroPage
+      },
+      (error) => {
+        console.error('Error al obtener las regiones: ', error);
+      }
+    );
+  }
+
+  async guardar() {
     var f = this.formularioRegistro.value;
 
-    if(this.formularioRegistro.invalid){
+    if (this.formularioRegistro.invalid) {
       const alert = await this.alertController.create({
         header: 'Campos incompletos',
         message: 'Debes llenar todos los campos.',
-        buttons: ['Aceptar']
+        buttons: ['Aceptar'],
       });
 
       await alert.present();
@@ -43,12 +64,12 @@ export class RegistroPage implements OnInit {
       nombre: f.nombre,
       rut: f.rut,
       correo: f.correo,
-      password: f.password
-    }
+      password: f.password,
+      region: f.region,
+      comuna: f.comuna
+    };
 
-    localStorage.setItem('usuario',JSON.stringify(usuario));
-    window.location.href='/login';
+    localStorage.setItem('usuario', JSON.stringify(usuario));
+    window.location.href = '/login';
   }
-
-
 }

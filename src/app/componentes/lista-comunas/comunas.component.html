@@ -1,0 +1,10 @@
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Comuna</ion-label>
+      <ion-select placeholder="Elige una comuna" [(ngModel)]="comunaSeleccionada">
+        <ion-select-option *ngFor="let comuna of comunas" [value]="comuna.nombre">{{ comuna.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>

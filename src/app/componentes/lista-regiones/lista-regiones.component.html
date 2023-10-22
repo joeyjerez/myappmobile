@@ -1,0 +1,11 @@
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Región</ion-label>
+      <ion-select placeholder="Elige una región" [(ngModel)]="regionSeleccionada" (ionChange)="seleccionarRegion(regionSeleccionada)">
+        <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">{{ region.nombre }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>
+

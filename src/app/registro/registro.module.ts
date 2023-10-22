@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { RegistroPageRoutingModule } from './registro-routing.module';
 
 import { RegistroPage } from './registro.page';
+import { ListaRegionesComponent } from '../componentes/lista-regiones/lista-regiones.component';
+
 
 @NgModule({
   imports: [
@@ -16,6 +18,6 @@ import { RegistroPage } from './registro.page';
     RegistroPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistroPage]
+  declarations: [RegistroPage, ListaRegionesComponent]
 })
 export class RegistroPageModule {}
