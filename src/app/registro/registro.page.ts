@@ -13,12 +13,15 @@ export class RegistroPage implements OnInit {
   formularioRegistro: FormGroup;
   regionSeleccionada: string = '';
   regiones: any[] = []; // Lista de regiones para usar en RegistroPage
+  comunaSeleccionada: string = '';
+  comunas: any[] = [];
 
   constructor(
     public fb: FormBuilder,
     public alertController: AlertController,
     public navCtrl: NavController,
-    private datosRegionalesService: DatosRegionalesService
+    private datosRegionalesService: DatosRegionalesService,
+    private ComunasService: ComunasService
   ) {
     this.formularioRegistro = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -31,9 +34,11 @@ export class RegistroPage implements OnInit {
     });
   }
 
+  
+
   ngOnInit() {
     this.obtenerRegiones();
-    
+    this.obtenerComunas();
   }
 
   obtenerRegiones() {
@@ -43,6 +48,17 @@ export class RegistroPage implements OnInit {
       },
       (error) => {
         console.error('Error al obtener las regiones: ', error);
+      }
+    );
+  }
+
+  obtenerComunas() {
+    this.ComunasService.obtenerComunas().subscribe(
+      (data) => {
+          this.comunas = data.data;
+      },
+      (error) => {
+        console.error('Error no se pueden obtener las comunas',error);
       }
     );
   }

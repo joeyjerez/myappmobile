@@ -8,7 +8,7 @@ import { RegistroPageRoutingModule } from './registro-routing.module';
 
 import { RegistroPage } from './registro.page';
 import { ListaRegionesComponent } from '../componentes/lista-regiones/lista-regiones.component';
-
+import { ComunasComponent } from '../componentes/lista-comunas/comunas.component';
 
 @NgModule({
   imports: [
@@ -18,6 +18,6 @@ import { ListaRegionesComponent } from '../componentes/lista-regiones/lista-regi
     RegistroPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [RegistroPage, ListaRegionesComponent]
+  declarations: [RegistroPage, ListaRegionesComponent, ComunasComponent]
 })
 export class RegistroPageModule {}

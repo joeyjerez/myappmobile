@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ComunasService } from 'src/app/servicios/comunas.service';
 
 @Component({
@@ -7,8 +7,10 @@ import { ComunasService } from 'src/app/servicios/comunas.service';
   styleUrls: ['./comunas.component.scss'],
 })
 export class ComunasComponent  implements OnInit {
-    comunas: any[] = [];
-    comunaSeleccionada: string = '';
+  @Input() comunas: any[] = [];
+  comunaSeleccionada: string = '';
+
+  @Output() comunaSeleccionadaChange = new EventEmitter<string>(); // Emite eventos cuando cambia la región seleccionada
 
   constructor(private ComunasService : ComunasService) {}
 
@@ -18,13 +20,18 @@ export class ComunasComponent  implements OnInit {
 
   obtenerComunas() {
     this.ComunasService.obtenerComunas().subscribe(
-        (data) => {
-            this.comunas = data.data;
-        },
-        (error) => {
-            console.error('Error no se pueden obtener las comunas',error);
-        }
+      (data) => {
+          this.comunas = data.data;
+      },
+      (error) => {
+        console.error('Error no se pueden obtener las comunas',error);
+      }
     );
+  }
+  // Método para seleccionar una comuna
+  seleccionarComuna(comuna: string) {
+    this.comunaSeleccionada = comuna;
+    this.comunaSeleccionadaChange.emit(comuna); // Emitir el evento cuando cambia la región seleccionada
   }
 
 }
