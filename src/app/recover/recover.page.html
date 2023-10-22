@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark" id="tool">
+    
+    <ion-back-button slot="start" defaultHref="login"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" color="warning">
+  <ion-card id="carl">
+    <ion-card-header>
+      <h1 class="ion-text-center" id="titutlo">Recuperar contraseña</h1>
+    </ion-card-header>
+    <ion-card-content>
+      <div id="bodyHome">
+          <form [formGroup]="formularioRecuperar"> 
+          <ion-item>
+            <ion-label position="floating">Rut</ion-label>
+            <ion-input formControlName="rut" fill="outline" placeholder="Rut" class="ion-padding"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Correo</ion-label>
+            <ion-input formControlName="correo" fill="outline" placeholder="Correo" class="ion-padding"></ion-input>
+          </ion-item>
+          <br/>
+          <ion-button (click)="recuperar()" expand="block" color="warning" class="ion-padding-top; ion-padding-bottom">Recuperar</ion-button>
+        </form>
+        </div>
+    </ion-card-content>
+  </ion-card>
+  
+  
+</ion-content>

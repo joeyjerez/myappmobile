@@ -3,14 +3,39 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
+  {
+    path: 'registro',
+    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'qr-code',
+    loadChildren: () => import('./qr-code/qr-code.module').then( m => m.QrCodePageModule)
+  },
+  {
+    path: 'asistencias',
+    loadChildren: () => import('./asistencias/asistencias.module').then( m => m.AsistenciasPageModule)
+  },
+  {
+    path: 'recover',
+    loadChildren: () => import('./recover/recover.module').then( m => m.RecoverPageModule)
+  },
+  {
+    path: 'pass-change',
+    loadChildren: () => import('./pass-change/pass-change.module').then( m => m.PassChangePageModule)
+  },
+  {
+    path: 'index',
+    loadChildren: () => import('./index/index.module').then( m => m.IndexPageModule)
+  },
+
 ];
 
 @NgModule({

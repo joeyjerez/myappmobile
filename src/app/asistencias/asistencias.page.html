@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="cam-con"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    
+  </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <h1 class="ion-text-center" style="color: rgb(56, 92, 252);">¡Asistencia Confirmada!</h1>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <div id="datos">
+        <p style="color: black;">Nombre del Alumno:</p>
+        <h1> {{ userAlum }} </h1>
+        <br>
+        <p style="color: black;">Datos de la clase:</p>
+        <h1>{{ dataProfe }}</h1>
+
+      </div>
+    </ion-card-content>
+  </ion-card>
+  
+  
+
+  <ion-button (click)="cerrarSesion()" expand="block" color="warning">SALIR</ion-button>
+</ion-content>
+
