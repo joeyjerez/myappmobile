@@ -1,19 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { QrCodePageRoutingModule } from './qr-code-routing.module';
 
 import { QrCodePage } from './qr-code.page';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    QrCodePageRoutingModule
+    QrCodePageRoutingModule,
+    ReactiveFormsModule,
+    NgxScannerQrcodeModule,
   ],
   declarations: [QrCodePage]
 })

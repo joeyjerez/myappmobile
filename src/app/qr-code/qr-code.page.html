@@ -1,13 +1,42 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>qr-code</ion-title>
+    <ion-back-button slot="start" defaultHref="inicio"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">qr-code</ion-title>
+      
     </ion-toolbar>
   </ion-header>
+
+<!-- For camera -->
+<ngx-scanner-qrcode #action="scanner"></ngx-scanner-qrcode>
+
+<!-- Recoleccion de la data  -->
+<span #myValue [hidden]="true">{{ action.data.value | json }}</span> <!-- value -->
+
+<div id="body">
+  <div>
+    <!-- Imagen Cargando -->
+    <p *ngIf="action.isLoading">⌛ Cargando...</p>
+
+    <!-- Opcion Iniciar Scanneo -->
+    <h1 id="titutlo">Iniciar Scanner QR</h1>
+    
+    <ion-button expand="block" color="warning" (click)="action.isStart ? action.stop() : action.start()">{{action.isStart ? 'Stop' : 'Start'}}</ion-button>
+  </div>
+
+  <!-- OPCION SUBIR ARCHIVOS -->
+  <br>
+  <!-- For select files -->
+  <p [hidden]="true">Subir Código QR</p>
+  <input [hidden]="true" #file type="file" (change)="onSelects(file.files)" [multiple]="'multiple'" [accept]="'.jpg, .png, .gif, .jpeg'"/>
+  <br>
+
+  <div id="btnScanerConfirmar">
+    <ion-button expand="block" color="warning" (click)="recogerinfo()" id="btnConfirmar">Confirmar</ion-button>
+  </div>
+</div>
 </ion-content>
