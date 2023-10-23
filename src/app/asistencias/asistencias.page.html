@@ -31,6 +31,18 @@
     <p>Latitud: {{ latitud }}</p>
     <p>Longitud: {{ longitud }}</p>
   </div>
+
+  <div *ngIf="region || comuna">
+    <p>Región: {{ region }}</p>
+    <p>Comuna: {{ comuna }}</p>
+  </div>
+
+  <ion-button (click)="tomarFoto()">Tomar Foto</ion-button>
+
+  <ion-card *ngIf="fotoTomada">
+    <img [src]="fotoTomada" alt="Foto tomada">
+  </ion-card>
+
   
   
 
