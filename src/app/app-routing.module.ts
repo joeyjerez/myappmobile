@@ -1,10 +1,13 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { NoIngresadoGuard } from './no-ingresado.guard';
+import { IngresadoGuard } from './ingresado.guard';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    canActivate: [NoIngresadoGuard]
   },
   {
     path: '',
@@ -13,15 +16,18 @@ const routes: Routes = [
   },
   {
     path: 'registro',
-    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
+    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule),
+    canActivate: [NoIngresadoGuard]
   },
   {
     path: 'qr-code',
-    loadChildren: () => import('./qr-code/qr-code.module').then( m => m.QrCodePageModule)
+    loadChildren: () => import('./qr-code/qr-code.module').then( m => m.QrCodePageModule),
+    canActivate: [IngresadoGuard]
   },
   {
     path: 'asistencias',
-    loadChildren: () => import('./asistencias/asistencias.module').then( m => m.AsistenciasPageModule)
+    loadChildren: () => import('./asistencias/asistencias.module').then( m => m.AsistenciasPageModule),
+    canActivate: [IngresadoGuard]
   },
   {
     path: 'recover',
@@ -33,7 +39,8 @@ const routes: Routes = [
   },
   {
     path: 'index',
-    loadChildren: () => import('./index/index.module').then( m => m.IndexPageModule)
+    loadChildren: () => import('./index/index.module').then( m => m.IndexPageModule),
+    canActivate: [IngresadoGuard]
   }
   
   
