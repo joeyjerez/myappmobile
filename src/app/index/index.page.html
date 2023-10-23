@@ -1,18 +1,16 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="dark" id="tool">
-    
-  </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <h1 class="ion-text-center" style="color: rgb(56, 92, 252);">¡Bienvenido!  {{ userAlum }}</h1>
+  <h1 class="ion-text-center" style="color: rgb(253, 253, 253);">¡Bienvenido!  {{ userAlum }}</h1>
   <ion-card>
     <ion-card-content>
-      <ion-button [routerLink]="['/qr-code']" expand="block" color="warning">Registrar asistencia</ion-button>
+      <ion-button [routerLink]="['/qr-code']" expand="block" color="primary">Registrar asistencia</ion-button>
     </ion-card-content>
   </ion-card>
   <div id="logout">
-    <ion-button [routerLink]="['/login']" expand="block" color="dark" class="ion-padding-top">Cerrar Sesión</ion-button>
+    <ion-button [routerLink]="['/login']" expand="block" color="primary" class="ion-padding-top">Cerrar Sesión</ion-button>
   </div>
   
 </ion-content>

@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-back-button slot="start" defaultHref="cam-con"></ion-back-button>
+    <ion-back-button slot="start" defaultHref="qr-code"></ion-back-button>
   </ion-toolbar>
 </ion-header>
 
@@ -11,23 +11,30 @@
   </ion-header>
   <ion-card>
     <ion-card-header>
-      <h1 class="ion-text-center" style="color: rgb(56, 92, 252);">¡Asistencia Confirmada!</h1>
+      <h1 class="ion-text-center" style="color: rgb(56, 92, 252);">¡Clase Registrada con éxito!</h1>
     </ion-card-header>
     <ion-card-content>
       
       <div id="datos">
-        <p style="color: black;">Nombre del Alumno:</p>
+        <p style="color: rgb(6, 133, 192);">Nombre del Alumno:</p>
         <h1> {{ userAlum }} </h1>
         <br>
-        <p style="color: black;">Datos de la clase:</p>
+        <p style="color: rgb(6, 133, 192);">Datos QR:</p>
         <h1>{{ dataProfe }}</h1>
 
       </div>
     </ion-card-content>
   </ion-card>
+
+  <ion-button (click)="obtenerUbicacion()">Obtener Ubicación</ion-button>
+  <div *ngIf="latitud && longitud">
+    <p>Latitud: {{ latitud }}</p>
+    <p>Longitud: {{ longitud }}</p>
+  </div>
   
   
 
-  <ion-button (click)="cerrarSesion()" expand="block" color="warning">SALIR</ion-button>
+  <ion-button (click)="cerrarSesion()" expand="block" color="primary">SALIR</ion-button>
 </ion-content>
+
 
