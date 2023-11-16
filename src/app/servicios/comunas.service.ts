@@ -7,11 +7,17 @@ import { Observable } from 'rxjs';
 })
 export class ComunasService {
 
-  private apiUrl = 'https://dev.matiivilla.cl/duoc/location/comuna/7';
+  private apiUrl = 'https://dev.matiivilla.cl/duoc/location/comuna';
 
   constructor(private http: HttpClient) {}
-  obtenerComunas():Observable<any>{
-    return this.http.get<any>(this.apiUrl);
+
+
+
+  obtenerComunasPorRegion(regionId: number): Observable<any> {
+    const url = `${this.apiUrl}/${regionId}`;
+    return this.http.get<any>(url);
   }
+
+  
 
 }

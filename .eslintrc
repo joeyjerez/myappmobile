@@ -1,0 +1,8 @@
+{
+    "rules": {
+        "quotes": ["error", "single"],
+        "indent": ["error", 2],
+        "comma-dangle": ["error", "always-multiline"]
+
+    }
+}

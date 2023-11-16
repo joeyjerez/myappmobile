@@ -14,4 +14,11 @@ export class DatosRegionalesService {
     obtenerRegiones():Observable<any>{
       return this.http.get<any>(this.apiUrl);
    }
+
+
+   // Método para obtener comunas por región
+  obtenerComunasPorRegion(regionId: string): Observable<any> {
+    const url = `${this.apiUrl}/region/${regionId}/comunas`; // Ajusta la ruta según la estructura de tu API
+    return this.http.get(url);
+  }
 }

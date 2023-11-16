@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AlertController, NavController } from '@ionic/angular';
-import { DatosRegionalesService } from '../servicios/datos-regionales.service';// Asegúrate de proporcionar la ruta correcta
-import { ComunasService } from '../servicios/comunas.service';
+import { AlertController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
+
+interface Region {
+  id: number;
+  nombre: string;
+}
+
+interface Comuna {
+  id: number;
+  nombre: string;
+}
 
 @Component({
   selector: 'app-registro',
@@ -11,17 +20,13 @@ import { ComunasService } from '../servicios/comunas.service';
 })
 export class RegistroPage implements OnInit {
   formularioRegistro: FormGroup;
-  regionSeleccionada: string = '';
-  regiones: any[] = []; // Lista de regiones para usar en RegistroPage
-  comunaSeleccionada: string = '';
-  comunas: any[] = [];
+  regiones: Region[] = [];
+  comunas: Comuna[] = [];
 
   constructor(
     public fb: FormBuilder,
     public alertController: AlertController,
-    public navCtrl: NavController,
-    private datosRegionalesService: DatosRegionalesService,
-    private ComunasService: ComunasService
+    private http: HttpClient,
   ) {
     this.formularioRegistro = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -34,37 +39,45 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  
-
   ngOnInit() {
-    this.obtenerRegiones();
-    this.obtenerComunas();
+    this.loadRegiones();
   }
 
-  obtenerRegiones() {
-    this.datosRegionalesService.obtenerRegiones().subscribe(
-      (data) => {
-        this.regiones = data.data; // Llenar la lista de regiones en RegistroPage
+  loadRegiones() {
+    this.http.get<any>('https://dev.matiivilla.cl/duoc/location/region').subscribe({
+      next: (data) => {
+        this.regiones = data.data.map((region: any) => ({
+          id: region.id,
+          nombre: region.nombre,
+        }));
       },
-      (error) => {
-        console.error('Error al obtener las regiones: ', error);
-      }
-    );
+      error: (error) => {
+        console.error('Error al obtener las regiones:', error);
+      },
+    });
   }
 
-  obtenerComunas() {
-    this.ComunasService.obtenerComunas().subscribe(
-      (data) => {
-          this.comunas = data.data;
-      },
-      (error) => {
-        console.error('Error no se pueden obtener las comunas',error);
-      }
-    );
+  onRegionChange() {
+    const regionId = Number(this.formularioRegistro.value.region);
+    if (!isNaN(regionId)) {
+      this.http.get<any>(`https://dev.matiivilla.cl/duoc/location/comuna/${regionId}`).subscribe({
+        next: (data) => {
+          this.comunas = data.data.map((comuna: any) => ({
+            id: comuna.id,
+            nombre: comuna.nombre,
+          }));
+        },
+        error: (error) => {
+          console.error('Error al obtener las comunas por región:', error);
+        },
+      });
+    } else {
+      console.error('Error: No se pudo convertir la región a un número.');
+    }
   }
 
   async guardar() {
-    var f = this.formularioRegistro.value;
+    const f = this.formularioRegistro.value;
 
     if (this.formularioRegistro.invalid) {
       const alert = await this.alertController.create({
@@ -76,13 +89,14 @@ export class RegistroPage implements OnInit {
       await alert.present();
       return;
     }
-    var usuario = {
+
+    const usuario = {
       nombre: f.nombre,
       rut: f.rut,
       correo: f.correo,
       password: f.password,
       region: f.region,
-      comuna: f.comuna
+      comuna: f.comuna,
     };
 
     localStorage.setItem('usuario', JSON.stringify(usuario));

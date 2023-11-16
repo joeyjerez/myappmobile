@@ -7,50 +7,48 @@
 <ion-content [fullscreen]="true">
   <ion-card id="carl">
     <ion-card-header>
-     <h1 class="ion-text-center" id="titutlo">Regístrate</h1>
+      <h1 class="ion-text-center" id="titutlo">Regístrate</h1>
     </ion-card-header>
     <ion-card-content>
-    <div>
-        <form [formGroup]="formularioRegistro" (keyup.enter)="guardar()"> 
-          <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
-            <ion-input formControlName="nombre" fill="outline" placeholder="Nombre" class="ion-padding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Rut</ion-label>
-            <ion-input formControlName="rut" fill="outline" placeholder="Rut" class="ion-padding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Correo</ion-label>
-            <ion-input formControlName="correo" fill="outline" placeholder="Correo" class="ion-padding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Región</ion-label>
-            <ion-select formControlName="region" placeholder="Elige una región">
-              <ion-select-option *ngFor="let region of regiones" [value]="region.nombre">{{ region.nombre }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked">Comuna</ion-label>
-            <ion-select formControlName="region" placeholder="Elige una comuna">
-              <ion-select-option *ngFor="let comuna of comunas" [value]="comuna.nombre">{{ comuna.nombre }}</ion-select-option>
-            </ion-select>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input formControlName="password" type="password" minlength="4" maxlength="4" fill="outline" placeholder="Contraseña" class="ion-padding"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="floating">Confirmar Contraseña</ion-label>
-            <ion-input formControlName="confirmacionPassword" type="password" minlength="4" maxlength="4" fill="outline" placeholder="Contraseña" class="ion-padding"></ion-input>
-          </ion-item>
-          <br/>
-          <ion-button (click)="guardar()" expand="block" color="primary" class="ion-padding-top">Registrar</ion-button>
-        </form>
-      </div>
+      <form [formGroup]="formularioRegistro" (keyup.enter)="guardar()"> 
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input formControlName="nombre" fill="outline" placeholder="Nombre" class="ion-padding"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Rut</ion-label>
+          <ion-input formControlName="rut" fill="outline" placeholder="Rut" class="ion-padding"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Correo</ion-label>
+          <ion-input formControlName="correo" fill="outline" placeholder="Correo" class="ion-padding"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="stacked">Región</ion-label>
+          <ion-select formControlName="region" placeholder="Elige una región" (ionChange)="onRegionChange()">
+            <ion-select-option *ngFor="let region of regiones" [value]="region.id">{{ region.nombre }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
+        <ion-item *ngIf="comunas && comunas.length > 0">
+          <ion-label position="stacked">Comuna</ion-label>
+          <ion-select formControlName="comuna" placeholder="Elige una comuna">
+            <ion-select-option *ngFor="let comuna of comunas" [value]="comuna.id">{{ comuna.nombre }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Contraseña</ion-label>
+          <ion-input formControlName="password" type="password" minlength="4" fill="outline" placeholder="Contraseña" class="ion-padding"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Confirmar Contraseña</ion-label>
+          <ion-input formControlName="confirmacionPassword" type="password" minlength="4" fill="outline" placeholder="Confirmar Contraseña" class="ion-padding"></ion-input>
+        </ion-item>
+        <br/>
+        <ion-button expand="block" color="primary" (click)="guardar()" class="ion-padding-top">Registrar</ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-
-

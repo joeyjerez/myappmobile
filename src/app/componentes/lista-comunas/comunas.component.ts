@@ -6,32 +6,34 @@ import { ComunasService } from 'src/app/servicios/comunas.service';
   templateUrl: './comunas.component.html',
   styleUrls: ['./comunas.component.scss'],
 })
-export class ComunasComponent  implements OnInit {
+export class ComunasComponent implements OnInit {
   @Input() comunas: any[] = [];
   comunaSeleccionada: string = '';
 
-  @Output() comunaSeleccionadaChange = new EventEmitter<string>(); // Emite eventos cuando cambia la región seleccionada
+  @Output() comunaSeleccionadaChange = new EventEmitter<string>(); // Emite eventos cuando cambia la comuna seleccionada
 
-  constructor(private ComunasService : ComunasService) {}
+  constructor(private comunasService: ComunasService) {}
 
   ngOnInit() {
-    this.obtenerComunas();
+    // Puedes decidir si deseas cargar las comunas aquí o en otro lugar según tu flujo de la aplicación
   }
 
-  obtenerComunas() {
-    this.ComunasService.obtenerComunas().subscribe(
-      (data) => {
-          this.comunas = data.data;
-      },
-      (error) => {
-        console.error('Error no se pueden obtener las comunas',error);
-      }
-    );
-  }
   // Método para seleccionar una comuna
   seleccionarComuna(comuna: string) {
     this.comunaSeleccionada = comuna;
-    this.comunaSeleccionadaChange.emit(comuna); // Emitir el evento cuando cambia la región seleccionada
+    this.comunaSeleccionadaChange.emit(comuna); // Emitir el evento cuando cambia la comuna seleccionada
   }
 
+  // Puedes mantener este método si decides cargar las comunas en otro momento
+  obtenerComunasPorRegiones(regionId: number) {
+    this.comunasService.obtenerComunasPorRegion(regionId).subscribe(
+      (data) => {
+        this.comunas = data.data;
+        console.log('Comunas por región:', this.comunas);
+      },
+      (error) => {
+        console.error('Error no se pueden obtener las comunas por región: ', error);
+      }
+    );
+  }
 }
