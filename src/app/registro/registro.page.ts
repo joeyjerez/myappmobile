@@ -1,7 +1,10 @@
+import { Preferences } from '@capacitor/preferences';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { Storage } from '@ionic/storage-angular';
+
 
 interface Region {
   id: number;
@@ -27,6 +30,7 @@ export class RegistroPage implements OnInit {
     public fb: FormBuilder,
     public alertController: AlertController,
     private http: HttpClient,
+    private storage: Storage
   ) {
     this.formularioRegistro = this.fb.group({
       nombre: new FormControl('', Validators.required),
@@ -39,7 +43,15 @@ export class RegistroPage implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    // Recuperar datos almacenados al inicio de la página
+    const storedUsuario = await Preferences.get({ key: 'usuario' });
+
+    if (storedUsuario && storedUsuario.value) {
+      const usuario = JSON.parse(storedUsuario.value);
+      console.log('Usuario recuperado:', usuario);
+    }
+
     this.loadRegiones();
   }
 
@@ -99,7 +111,17 @@ export class RegistroPage implements OnInit {
       comuna: f.comuna,
     };
 
-    localStorage.setItem('usuario', JSON.stringify(usuario));
+    // Utilizar Capacitor Preferences para almacenar datos en lugar de localStorage
+    await Preferences.set({
+      key: 'usuario',
+      value: JSON.stringify(usuario),
+    });
     window.location.href = '/login';
+
+    
+    await this.storage.set('region', this.regiones);
+    await this.storage.set('comuna', this.comunas);
+
+
   }
 }

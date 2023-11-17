@@ -3,6 +3,8 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Preferences } from '@capacitor/preferences';
+import { Storage } from '@ionic/storage-angular';
+
 
 
 @Component({
@@ -20,7 +22,8 @@ export class AsistenciasPage implements OnInit {
   region: string | null;
   comuna: string | null;
 
-  constructor() {
+  constructor(private storage: Storage) {
+    
     this.dataProfe = localStorage.getItem("dataProfeCamera");
     
     let value = JSON.parse(localStorage.getItem("usuario")!);
@@ -44,7 +47,18 @@ export class AsistenciasPage implements OnInit {
     localStorage.removeItem("dataProfeCamera")
     window.location.href='/login'
   }
-  ngOnInit() {
+  async ngOnInit() {
+
+    // Inicializar el servicio de almacenamiento
+    await this.storage.create();
+
+    // Obtener datos almacenados si es necesario
+    this.dataProfe = await this.storage.get('dataProfeCamera');
+  }
+
+  verStorage()
+  {
+
   }
 
 
@@ -52,6 +66,9 @@ export class AsistenciasPage implements OnInit {
   async obtenerUbicacion() {
     const coordinates = await Geolocation.getCurrentPosition();
     this.mostrarCoordenadas(coordinates);
+    await this.storage.set('latitud', this.latitud);
+    await this.storage.set('longitud', this.longitud);
+
   }
 
   mostrarCoordenadas(coordenadas: any) {
@@ -71,7 +88,11 @@ export class AsistenciasPage implements OnInit {
     } else {
       this.fotoTomada = null;
     }
+
+    // Guardar la foto en el almacenamiento
+    await this.storage.set('fotoTomada', this.fotoTomada);
+  }
   }
   
 
-}
+

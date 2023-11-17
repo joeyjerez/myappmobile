@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertController, IonicModule, NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -12,11 +13,17 @@ export class LoginPage {
 
   constructor(public fb: FormBuilder,
     public alertController: AlertController,
+    private storage: Storage,
     public navCtrl: NavController) {
       this.formularioLogin = this.fb.group({
         'correo': new FormControl("",Validators.required),
         'password': new FormControl("",Validators.required),
       })
+    }
+
+    async ngOnInit(){
+
+      await this.storage.create();
     }
 
     async ingresar(){
@@ -38,6 +45,11 @@ export class LoginPage {
         await alert.present();
   
       }
+
+      //guardar informacion en el storage
+      this.storage.set("nombre","joey");
+      
+
     }
 
 }
